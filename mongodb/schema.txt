@@ -1,0 +1,34 @@
+User:
+
+User ID (unique identifier)
+Username
+Full name
+Email
+Password (hashed or encrypted)
+Profile picture
+Bio or About Me section
+
+
+Posts:
+
+Post ID (unique identifier)
+User ID of the author
+Content (text)
+Timestamp for post creation
+
+
+Messages:
+
+Message ID (unique identifier)
+Sender User ID
+Receiver User ID
+Content (text)
+Timestamp for message sent
+
+
+
+Friends/Connections:
+
+User ID of the first user
+User ID of the second user
+Timestamp for connection establish

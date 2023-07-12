@@ -1,0 +1,38 @@
+                                                                                                                                                                                                Users:
+CREATE KEYSPACE IF NOT EXISTS social_media
+  WITH replication = {'class': 'SimpleStrategy', 'replication_factor': 1};
+
+USE social_media;
+
+CREATE TABLE IF NOT EXISTS users (
+  user_id UUID PRIMARY KEY,
+  username text,
+  full_name text,
+  email text,
+  password text,
+  profile_picture text,
+  bio text
+);
+
+CREATE TABLE IF NOT EXISTS posts (
+  post_id UUID PRIMARY KEY,
+  user_id UUID,
+  content text,
+  timestamp timestamp
+);
+
+CREATE TABLE IF NOT EXISTS messages (
+  message_id UUID PRIMARY KEY,
+  sender_user_id UUID,
+  receiver_user_id UUID,
+  content text,
+  timestamp timestamp
+);
+
+CREATE TABLE IF NOT EXISTS connections (
+  user_id_1 UUID,
+  user_id_2 UUID,
+  timestamp timestamp,
+  PRIMARY KEY (user_id_1, user_id_2)
+);
+

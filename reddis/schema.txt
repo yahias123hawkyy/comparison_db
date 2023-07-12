@@ -1,0 +1,17 @@
+
+for the users:
+
+HSET user:{user_id} username {username} full_name {full_name} email {email} password {password} profile_picture {profile_picture} bio {bio}
+
+
+for the posts:
+
+HSET post:{post_id} user_id {user_id} content {content} timestamp {timestamp} post_count {post_count} message_count {message_count} connection_count {connection_count}
+
+for the messages:
+
+HSET message:{message_id} sender_user_id {sender_user_id} receiver_user_id {receiver_user_id} content {content} timestamp {timestamp}
+
+Connections --we used ZADD for sorting:
+
+ZADD connections:{user_id_1} {timestamp} {user_id_2}

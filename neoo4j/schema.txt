@@ -1,0 +1,36 @@
+CREATE CONSTRAINT ON (u:User) ASSERT u.user_id IS UNIQUE;
+LOAD CSV WITH HEADERS FROM 'file:///users_1m.csv' AS row
+CREATE (u:User {
+  user_id: row.user_id,
+  username: row.username,
+  full_name: row.full_name,
+  email: row.email,
+  password: row.password,
+  profile_picture: row.profile_picture,
+  bio: row.bio
+});
+
+LOAD CSV WITH HEADERS FROM 'file:///posts_1m.csv' AS row
+MATCH (u:User {user_id: row.user_id})
+CREATE (p:Post {
+  post_id: row.post_id,
+  content: row.content,
+  timestamp: datetime(row.timestamp)
+})
+MERGE (u)-[:POSTED]->(p);
+
+LOAD CSV WITH HEADERS FROM 'file:///messages_1m.csv' AS row
+MATCH (sender:User {user_id: row.sender_user_id})
+MATCH (receiver:User {user_id: row.receiver_user_id})
+CREATE (m:Message {
+  message_id: row.message_id,
+  content: row.content,
+  timestamp: datetime(row.timestamp)
+})
+MERGE (sender)-[:SENT]->(m)
+MERGE (m)-[:RECEIVED]->(receiver);
+
+LOAD CSV WITH HEADERS FROM 'file:///friends_1m.csv' AS row
+MATCH (user1:User {user_id: row.user_id_1})
+MATCH (user2:User {user_id: row.user_id_2})
+CREATE (user1)-[:CONNECTED]->(user2);
