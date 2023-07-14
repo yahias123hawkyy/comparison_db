@@ -3,14 +3,11 @@ import json
 from datetime import datetime
 import redis
 
-# Connect to Redis
 redis_client = redis.Redis(host='127.0.0.1', port=6379, db=0)  # Replace host and port with your Redis server details
 
-# Function to insert data into Redis
 def insert_data(key, data):
     redis_client.set(key, json.dumps(data))
 
-# Function to load data from CSV file
 def load_data_from_csv(file_name):
     data = []
     with open(file_name, 'r', encoding='utf-8') as file:
@@ -25,7 +22,6 @@ posts_data_1m = load_data_from_csv('../datasets/m_1/posts_1m.csv')
 messages_data_1m = load_data_from_csv('../datasets/m_1/messages_1m.csv')
 friends_data_1m = load_data_from_csv('../datasets/m_1/friends_1m.csv')
 
-# Map attributes to Redis keys
 
 # Users Collection
 for row in users_data_1m:

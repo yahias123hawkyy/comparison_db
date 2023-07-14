@@ -3,11 +3,9 @@ import csv
 import uuid
 from datetime import datetime
 
-# Connect to Cassandra
 cluster = Cluster(['localhost'])
 session = cluster.connect('social_media')
 
-# Function to insert data into Cassandra table
 
 
 def insert_data(table_name, data):

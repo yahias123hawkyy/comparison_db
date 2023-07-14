@@ -5,13 +5,11 @@ from datetime import datetime
 import csv
 import os
 
-# Connect to Neo4j
-uri = 'bolt://localhost:7687'  # Replace with your Neo4j bolt URL
-user = 'neo4j'  # Replace with your Neo4j username
-password = 'password'  # Replace with your Neo4j password
+uri = 'bolt://localhost:7687'
+user = 'neo4j' 
+password = 'neo4jj' 
 driver = GraphDatabase.driver(uri, auth=(user, password))
 
-# Define your query
 query = '''
     MATCH (u:User {username: 'bjames'})
     RETURN u
@@ -25,9 +23,11 @@ with driver.session() as session:
     for i in range(num_experiments):
         # Measure the response time
         start_time = datetime.now()
-        result = session.run(query)
+        result1 = list(session.run(query))
+        print(result1)
         end_time = datetime.now()
-        response_time = (end_time - start_time).total_seconds() * 1000  # in milliseconds
+        response_time = (end_time - start_time).total_seconds() * \
+            1000  # in milliseconds
         response_times.append(response_time)
 
 # Calculate the mean value

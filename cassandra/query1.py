@@ -20,14 +20,14 @@ for i in range(num_experiments):
     start_time = datetime.now()
     result = session.execute(SimpleStatement(query))
     end_time = datetime.now()
-    response_time = (end_time - start_time).total_seconds() * 1000  # in milliseconds
+    response_time = (end_time - start_time).total_seconds() * 1000  
     response_times.append(response_time)
 
 # Calculate the mean value
 mean_value = statistics.mean(response_times)
 
 csv_file = 'response_times_1m.csv'
-query_name = '1m_users_Query1'  # Replace with the name of your query
+query_name = '1m_users_Query1'  
 
 file_exists = os.path.isfile(csv_file)
 

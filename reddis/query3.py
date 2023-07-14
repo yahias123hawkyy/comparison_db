@@ -5,15 +5,12 @@ from datetime import datetime
 import csv
 import os
 
-# Connect to Redis
 r = redis.Redis(host='localhost', port=6379)
 
-# Define the Redis key prefixes for each entity
 USER_PREFIX = 'user:'
 POST_PREFIX = 'post:'
 MESSAGE_PREFIX = 'message:'
-QUERY_NAME = '1m_users_Query3'  # Replace with the name of your query
-
+QUERY_NAME = '1m_users_Query3'  
 # Perform the experiments
 num_experiments = 31
 response_times = []

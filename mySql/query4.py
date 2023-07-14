@@ -11,12 +11,10 @@ connection = mysql.connector.connect(
     user="root",
     password="12345678",
     database="social_media"
-)  # Replace 'your_user' and 'your_password' with your MySQL credentials
+)  
 
-# Create a cursor object to interact with the database
 cursor = connection.cursor()
 
-# Perform the experiments
 num_experiments = 31
 response_times = []
 
@@ -25,10 +23,7 @@ for i in range(num_experiments):
 
     # Query users who posted at least 3 things
     post_query = """
-    SELECT CAST(user_id AS CHAR)
-    FROM posts
-    GROUP BY user_id
-    HAVING COUNT(*) >= 3
+    SELECT CAST(user_id AS CHAR) FROM posts GROUP BY user_id HAVING COUNT(*) >= 3
     """
     cursor.execute(post_query)
     post_result = cursor.fetchall()
@@ -36,10 +31,7 @@ for i in range(num_experiments):
 
     # Query users who sent at least 5 private messages
     message_query = """
-    SELECT CAST(sender_user_id AS CHAR)
-    FROM messages
-    GROUP BY sender_user_id
-    HAVING COUNT(*) >= 5
+    SELECT CAST(sender_user_id AS CHAR) FROM messages GROUP BY sender_user_id HAVING COUNT(*) >= 5
     """
     cursor.execute(message_query)
     message_result = cursor.fetchall()

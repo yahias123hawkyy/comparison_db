@@ -5,7 +5,6 @@ import os
 import statistics
 import scipy.stats as stats
 
-# Connect to MySQL
 connection = mysql.connector.connect(
     host="localhost",
     user="root",
@@ -13,7 +12,6 @@ connection = mysql.connector.connect(
     database="social_media"
 )  
 
-# Create a cursor object to interact with the database
 cursor = connection.cursor()
 
 # Perform the experiments
@@ -25,10 +23,7 @@ for i in range(num_experiments):
 
     # Query users who posted at least 3 things
     post_query = """
-    SELECT user_id
-    FROM posts
-    GROUP BY user_id
-    HAVING COUNT(*) >= 3
+    SELECT user_id FROM posts GROUP BY user_id HAVING COUNT(*) >= 3
     """
     cursor.execute(post_query)
     post_result = cursor.fetchall()
@@ -36,10 +31,7 @@ for i in range(num_experiments):
 
     # Query users who sent at least 5 private messages
     message_query = """
-    SELECT sender_user_id
-    FROM messages
-    GROUP BY sender_user_id
-    HAVING COUNT(*) >= 5
+    SELECT sender_user_id FROM messages GROUP BY sender_user_id HAVING COUNT(*) >= 5
     """
     cursor.execute(message_query)
     message_result = cursor.fetchall()

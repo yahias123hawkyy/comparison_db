@@ -1,3 +1,15 @@
+
+
+
+Creating a collection of User, Posts, Messages, connections.
+
+
+db.createCollection("users")
+db.createCollection("posts")
+db.createCollection("messages")
+db.createCollection("friends")
+
+
 User:
 
 User ID (unique identifier)

@@ -5,17 +5,13 @@ from datetime import datetime
 import csv
 import os
 
-# Establish a connection to MongoDB
 client = pymongo.MongoClient('mongodb://localhost:27017')
 db = client['social_network_db']
 
-# Choose a collection to query
 collection = db['users']
 
-# Define your query
 query = {'username': 'bjames'}
 
-# Perform the experiments
 num_experiments = 31
 response_times = []
 

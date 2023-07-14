@@ -6,17 +6,11 @@ import csv
 import os
 
 
-# Establish a connection to MongoDB
 client = pymongo.MongoClient('mongodb://localhost:27017')
 db = client['social_network_db']
 
-# Choose a collection to query
 collection = db['posts']
 
-# Define your query
-# query = { 'timestamp': '2023-06-24 18:38:47.300171'}
-
-# Perform the experiments
 num_experiments = 31
 response_times = []
 
@@ -27,6 +21,9 @@ response_times = []
 
 for i in range(num_experiments):
     start_time = datetime.now()
+
+
+
     posted_at_least_3 = db.posts.aggregate([
     {"$group": {"_id": "$user_id", "count": {"$sum": 1}}},
     {"$match": {"count": {"$gte": 3}}}
@@ -35,6 +32,8 @@ for i in range(num_experiments):
     user_ids_posted_at_least_3 = [user["_id"] for user in posted_at_least_3]
     
     users_with_at_least_3_posts = db.users.find({"_id": {"$in": user_ids_posted_at_least_3}})
+    
+    
     end_time = datetime.now()
     
     response_time = (end_time - start_time).total_seconds() * 1000  # in milliseconds

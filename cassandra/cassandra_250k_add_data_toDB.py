@@ -5,13 +5,10 @@ import datetime
 
 
 
-# Connect to Cassandra
-# Replace 'localhost' with your Cassandra host
+
 cluster = Cluster(['localhost'])
-# Replace 'social_media' with your keyspace name
 session = cluster.connect('social_media')
 
-# Function to insert data into Cassandra table
 
 
 def insert_data(table_name, data):

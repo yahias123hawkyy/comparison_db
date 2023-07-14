@@ -38,8 +38,7 @@ for i in range(num_experiments):
     response_time = (end_time - start_time).total_seconds() * 1000  # in milliseconds
     response_times.append(response_time)
 
-for i, time in enumerate(response_times):
-    print(f"Query {i+1} response time: {time} ms")
+
 
 # Calculate the mean value
 mean_value = statistics.mean(response_times)
@@ -56,12 +55,9 @@ with open(csv_file, 'a', newline='') as file:
 
     writer.writerow([query_name] + response_times)
 
-# Calculate the 95% confidence interval
 confidence_interval = stats.t.interval(0.95, len(response_times)-1, loc=mean_value, scale=stats.sem(response_times))
 
-# Print the results
 print(f"Mean Value: {mean_value} ms")
 print(f"95% Confidence Interval: {confidence_interval}")
 
-# Close the Cassandra connection
 cluster.shutdown()

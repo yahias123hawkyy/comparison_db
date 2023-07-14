@@ -5,14 +5,11 @@ import os
 import statistics
 import scipy.stats as stats
 
-# Connect to Cassandra
 cluster = Cluster(['localhost'])  
 session = cluster.connect('social_media')  
 
-# Define your query
 query = "SELECT user_id, COUNT(*) as count FROM posts"
 
-# Perform the experiments
 num_experiments = 31
 response_times = []
 
@@ -25,9 +22,7 @@ for i in range(num_experiments):
     response_time = (end_time - start_time).total_seconds() * 1000  # in milliseconds
     response_times.append(response_time)
 
-# Print the response times
-for i, time in enumerate(response_times):
-    print(f"Query {i+1} response time: {time} ms")
+
 
 # Calculate the mean value
 mean_value = statistics.mean(response_times)

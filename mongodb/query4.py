@@ -16,6 +16,11 @@ response_times = []
 
 for i in range(num_experiments):
     start_time = datetime.now()
+
+
+
+
+    
     users_with_3_posts = db.posts.aggregate([
         {"$group": {"_id": "$user_id", "post_count": {"$sum": 1}}},
         {"$match": {"post_count": {"$gte": 3}}}

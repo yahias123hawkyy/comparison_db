@@ -5,12 +5,11 @@ from datetime import datetime
 import csv
 import os
 
-# Connect to Redis
 r = redis.Redis(host='localhost', port=6379, db=0)
 
 USER_PREFIX = 'user:'
 POST_PREFIX = 'post:'
-QUERY_NAME = '1m_users_Query2'  # Replace with the name of your query
+QUERY_NAME = '1m_users_Query2'  
 
 num_experiments = 31
 response_times = []
@@ -18,7 +17,6 @@ response_times = []
 for i in range(num_experiments):
     start_time = datetime.now()
 
-    # Find users with at least 3 posts
     user_ids_posted_at_least_3 = []
     keys = r.scan_iter(match=POST_PREFIX + '*')
     for key in keys:
@@ -29,7 +27,6 @@ for i in range(num_experiments):
                 user_id = key.decode('utf-8').split(':')[1]
                 user_ids_posted_at_least_3.append(user_id)
 
-    # Fetch users with at least 3 posts
     users_with_at_least_3_posts = []
     for user_id in user_ids_posted_at_least_3:
         user = r.hgetall(USER_PREFIX + user_id)
@@ -41,7 +38,6 @@ for i in range(num_experiments):
 
 
 
-# Calculate the mean value
 mean_value = statistics.mean(response_times)
 
 csv_file = 'response_times_1m.csv'

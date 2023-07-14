@@ -5,19 +5,18 @@ from datetime import datetime
 import csv
 import os
 
-# Establish a connection to MongoDB
 client = pymongo.MongoClient('mongodb://localhost:27017')
 db = client['social_network_db']
 
-# Choose a collection to query
 collection = db['posts']
 
-# Define your query
 num_experiments = 31
 response_times = []
 
 for i in range(num_experiments):
     start_time = datetime.now()
+
+    
     users_with_3_posts = db.posts.aggregate([
         {"$group": {"_id": "$user_id", "post_count": {"$sum": 1}}},
         {"$match": {"post_count": {"$gte": 3}}}
@@ -53,11 +52,9 @@ csv_file = 'response_times_250k.csv'
 query_name = '250k_Query3'  # Replace with the name of your query
 file_exists = os.path.isfile(csv_file)
 
-# Open the CSV file in append mode
 with open(csv_file, 'a', newline='') as file:
     writer = csv.writer(file)
 
-    # Write the header row if the file doesn't exist
     if not file_exists:
         writer.writerow(['Query', 'Response Times'])
 

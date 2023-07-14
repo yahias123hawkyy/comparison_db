@@ -11,9 +11,8 @@ connection = mysql.connector.connect(
     user="root",
     password="12345678",
     database="social_media"
-)  # Replace 'your_user' and 'your_password' with your MySQL credentials
+)  
 
-# Create a cursor object to interact with the database
 cursor = connection.cursor()
 
 # Perform the experiments
@@ -23,11 +22,8 @@ response_times = []
 for i in range(num_experiments):
     start_time = datetime.now()
 
-    # Query users who have the username "bjames"
     post_query = """
-    SELECT username
-    FROM users
-    WHERE username = 'bjames'
+    SELECT username FROM users WHERE username = 'bjames'
     """
     cursor.execute(post_query)
     post_result = cursor.fetchall()
@@ -49,14 +45,15 @@ file_exists = os.path.isfile(csv_file)
 with open(csv_file, 'a', newline='') as file:
     writer = csv.writer(file)
 
-    # Write the header row if the file doesn't exist
     if not file_exists:
         writer.writerow(['Query', 'Response Times'])
 
-    # Write the query name and response times as a single row
     writer.writerow([query_name] + response_times)
 
-# Calculate the 95% confidence interval
+
+
+
+
 confidence_interval = stats.t.interval(0.95, len(response_times)-1, loc=mean_value, scale=stats.sem(response_times))
 
 # Print the results

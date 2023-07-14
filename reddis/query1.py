@@ -8,7 +8,7 @@ import os
 r = redis.Redis(host='localhost', port=6379)
 
 USER_PREFIX = 'user:'
-QUERY_NAME = '1m_users_Query1'  # Replace with the name of your query
+QUERY_NAME = '1m_users_Query1'  
 
 username = 'bjames'
 query = f"{USER_PREFIX}{username}"

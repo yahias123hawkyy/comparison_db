@@ -3,7 +3,6 @@ import mysql.connector
 import uuid
 from datetime import datetime
 
-# Establish MySQL connection
 mysql_connection = mysql.connector.connect(
     host='localhost',
     user='root',
@@ -11,7 +10,6 @@ mysql_connection = mysql.connector.connect(
     database='social_media'
 )
 
-# Create MySQL cursor
 cursor = mysql_connection.cursor()
 
 # Function to insert data into MySQL
@@ -26,7 +24,7 @@ def load_data_from_csv(file_name):
     data = []
     with open(file_name, 'r', encoding='utf-8') as file:
         reader = csv.reader(file)
-        next(reader)  # Skip header row
+        next(reader)  
         for row in reader:
             data.append(row)
     return data
@@ -37,7 +35,6 @@ posts_data_1m = load_data_from_csv('../datasets/m_1/posts_1m.csv')
 messages_data_1m = load_data_from_csv('../datasets/m_1/messages_1m.csv')
 friends_data_1m = load_data_from_csv('../datasets/m_1/friends_1m.csv')
 
-# Insert data into MySQL tables
 
 # Users Table
 for row in users_data_1m:
@@ -86,7 +83,6 @@ for row in friends_data_1m:
     }
     insert_data('connections', friend)
 
-# Commit the changes and close the MySQL connection
 mysql_connection.commit()
 cursor.close()
 mysql_connection.close()

@@ -4,12 +4,9 @@ import random
 from datetime import datetime
 from pymongo import MongoClient
 
-# Connect to MongoDB
 client = MongoClient('mongodb://localhost:27017/')
-# Replace 'social_network_db' with your desired database name
 db = client['social_network_db']
 
-# Function to insert data into MongoDB collection
 
 
 def insert_data(collection_name, data):
@@ -17,7 +14,6 @@ def insert_data(collection_name, data):
     collection.insert_many(data)
 
 
-# Function to load data from CSV file
 
 
 def load_data_from_csv(file_name):
@@ -29,13 +25,11 @@ def load_data_from_csv(file_name):
     return data
 
 
-# Load data from CSV files
 users_data_750k = load_data_from_csv('../datasets/k_750/users_750k.csv')
 posts_data_750k = load_data_from_csv('../datasets/k_750/posts_750k.csv')
 messages_data_750k = load_data_from_csv('../datasets/k_750/messages_750k.csv')
 friends_data_750k = load_data_from_csv('../datasets/k_750/friends_750k.csv')
 
-# Map attributes to collections
 
 # Users Collection
 users_collection = []
@@ -94,5 +88,4 @@ insert_data('posts', posts_collection)
 insert_data('messages', messages_collection)
 insert_data('friends', friends_collection)
 
-# Close the MongoDB connection
 client.close()

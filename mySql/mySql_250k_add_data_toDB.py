@@ -3,7 +3,6 @@ import mysql.connector
 import uuid
 from datetime import datetime
 
-# Establish MySQL connection
 mysql_connection = mysql.connector.connect(
     host='localhost',
     user='root',

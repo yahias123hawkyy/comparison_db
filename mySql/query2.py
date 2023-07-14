@@ -11,7 +11,7 @@ connection = mysql.connector.connect(
     user="root",
     password="12345678",
     database="social_media"
-)  # Replace 'your_user' and 'your_password' with your MySQL credentials
+) 
 
 # Create a cursor object to interact with the database
 cursor = connection.cursor()

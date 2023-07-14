@@ -34,3 +34,54 @@ LOAD CSV WITH HEADERS FROM 'file:///friends_1m.csv' AS row
 MATCH (user1:User {user_id: row.user_id_1})
 MATCH (user2:User {user_id: row.user_id_2})
 CREATE (user1)-[:CONNECTED]->(user2);
+
+
+
+
+LOAD CSV FROM 'file:///users_500k.csv' AS row
+CREATE (:User {
+  user_id: row[0],
+  username: row[1],
+  full_name: row[2],
+  email: row[3],
+  password: row[4],
+  profile_picture: row[5],
+  bio: row[6]
+});
+
+LOAD CSV FROM 'file:///posts_500k.csv' AS row
+CREATE (:Post {
+  post_id: row[0],
+  user_id: row[1],
+  content: row[2],
+  timestamp: datetime(row[3])
+});
+
+LOAD CSV FROM 'file:///messages_500k.csv' AS row
+CREATE (:Message {
+  message_id: row[0],
+  sender_user_id: row[1],
+  receiver_user_id: row[2],
+  content: row[3],
+  timestamp: datetime(row[4])
+});
+
+LOAD CSV FROM 'file:///friends_500k.csv' AS row
+CREATE (:Connection {
+  user_id_1: row[0],
+  user_id_2: row[1],
+  timestamp: datetime(row[2])
+});
+
+
+
+
+
+
+
+
+
+
+
+MATCH (n)
+DETACH DELETE n

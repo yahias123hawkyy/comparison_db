@@ -57,18 +57,14 @@ mean_value = statistics.mean(response_times)
 csv_file = 'response_times_1m.csv'
 file_exists = os.path.isfile(csv_file)
 
-# Open the CSV file in append mode
 with open(csv_file, 'a', newline='') as file:
     writer = csv.writer(file)
 
-    # Write the header row if the file doesn't exist
     if not file_exists:
         writer.writerow(['Query', 'Response Times'])
 
-    # Write the query name and response times as a single row
     writer.writerow([QUERY_NAME] + response_times)
 
-# Calculate the 95% confidence interval
 confidence_interval = stats.t.interval(
     0.95, len(response_times)-1, loc=mean_value, scale=stats.sem(response_times))
 
