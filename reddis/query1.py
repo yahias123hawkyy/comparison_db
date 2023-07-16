@@ -5,7 +5,7 @@ from datetime import datetime
 import csv
 import os
 
-r = redis.Redis(host='localhost', port=6379)
+r = redis.Redis(host='localhost', port=6379,db=0)
 
 USER_PREFIX = 'user:'
 QUERY_NAME = '1m_users_Query1'  
@@ -16,9 +16,20 @@ query = f"{USER_PREFIX}{username}"
 num_experiments = 31
 response_times = []
 
+def retrieve_users_by_username(rr, username):
+    result = []
+    user_keys = rr.keys('user:*')
+    for key in user_keys:
+        user = rr.hgetall(key)
+        if user[b'username'].decode('utf-8') == username:
+            result.append(user)
+    return result
+
+
+
 for i in range(num_experiments):
     start_time = datetime.now()
-    result = r.hgetall(query)
+    resultt= retrieve_users_by_username(r, 'bjames')
     end_time = datetime.now()
     response_time = (end_time - start_time).total_seconds() * 1000  
     response_times.append(response_time)
