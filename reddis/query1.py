@@ -7,11 +7,11 @@ import os
 
 r = redis.Redis(host='localhost', port=6379,db=0)
 
-USER_PREFIX = 'user:'
+# USER_PREFIX = 'user:'
 QUERY_NAME = '1m_users_Query1'  
 
-username = 'bjames'
-query = f"{USER_PREFIX}{username}"
+# username = 'bjames'
+# query = f"{USER_PREFIX}{username}"
 
 num_experiments = 31
 response_times = []
