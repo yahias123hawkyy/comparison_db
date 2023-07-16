@@ -4,46 +4,42 @@ import scipy.stats as stats
 from datetime import datetime
 import csv
 import os
+import json
+
 
 r = redis.Redis(host='localhost', port=6379, db=0)
 
 USER_PREFIX = 'user:'
 POST_PREFIX = 'post:'
-QUERY_NAME = '1m_users_Query2'  
+QUERY_NAME = '1m_users_Query2'
 
 num_experiments = 31
 response_times = []
 
 
-
-
-
-def get_user(user_id):
-    user_key = USER_PREFIX + user_id
-    user_data = redis_client.hgetall(user_key)
-    if user_data:
-        return json.loads(user_data)
-    return None
-
-
-
 for i in range(num_experiments):
     start_time = datetime.now()
 
-  users_with_at_least_3_posts = []
-keys = redis_client.scan_iter(match=POST_PREFIX + '*')
-for key in keys:
-    post_count = redis_client.scard(key)
-    if post_count >= 3:
-        user_id = key.decode('utf-8').split(':')[1]
-        user = get_user(user_id)
-        if user:
-            users_with_at_least_3_posts.append(user)
+    user_ids = r.keys('user:*')
+    user_post_counts = {}
 
-    end_time = datetime.now()
-    response_time = (end_time - start_time).total_seconds() * 1000  # in milliseconds
-    response_times.append(response_time)
+    for user_id in user_ids:
+        start_time = datetime.now()
 
+        user_id = user_id.decode().split(':')[1]
+
+        user_details = r.hgetall(f'user:{user_id}')
+
+        post_keys = r.keys(f'post:*:user_id {user_id}')
+        post_count = len(post_keys)
+
+        if post_count >= 3:
+            user_post_counts[user_id] = user_details
+
+        end_time = datetime.now()
+        response_time = (end_time - start_time).total_seconds() * \
+            1000
+        response_times.append(response_time)
 
 
 mean_value = statistics.mean(response_times)
