@@ -12,7 +12,6 @@ POST_PREFIX = 'post:'
 MESSAGE_PREFIX = 'message:'
 QUERY_NAME = '1m_users_Query4' 
 
-# Perform the experiments
 num_experiments = 31
 response_times = []
 
@@ -68,6 +67,5 @@ with open(csv_file, 'a', newline='') as file:
 confidence_interval = stats.t.interval(
     0.95, len(response_times)-1, loc=mean_value, scale=stats.sem(response_times))
 
-# Print the results
 print(f"Mean Value: {mean_value} ms")
 print(f"95% Confidence Interval: {confidence_interval}")

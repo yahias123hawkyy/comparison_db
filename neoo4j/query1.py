@@ -21,13 +21,12 @@ response_times = []
 
 with driver.session() as session:
     for i in range(num_experiments):
-        # Measure the response time
         start_time = datetime.now()
         result1 = list(session.run(query))
         print(result1)
         end_time = datetime.now()
         response_time = (end_time - start_time).total_seconds() * \
-            1000  # in milliseconds
+            1000  
         response_times.append(response_time)
 
 # Calculate the mean value

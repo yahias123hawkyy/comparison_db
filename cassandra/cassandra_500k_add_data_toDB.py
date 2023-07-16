@@ -14,18 +14,16 @@ def load_data_from_csv(file_name):
     data = []
     with open(file_name, 'r', encoding='utf-8') as file:
         reader = csv.reader(file)
-        next(reader)  # Skip header row
+        # next(reader)  
         for row in reader:
             data.append(row)
     return data
 
-# Load data from CSV files
 users_data_500k = load_data_from_csv('../datasets/k_500/users_500k.csv')
 posts_data_500k = load_data_from_csv('../datasets/k_500/posts_500k.csv')
 messages_data_500k = load_data_from_csv('../datasets/k_500/messages_500k.csv')
 friends_data_500k = load_data_from_csv('../datasets/k_500/friends_500k.csv')
 
-# Insert data into Cassandra tables
 
 # Users Table
 for row in users_data_500k:
@@ -74,5 +72,4 @@ for row in friends_data_500k:
     }
     insert_data('connections', friend)
 
-# Close the Cassandra connection
 cluster.shutdown()

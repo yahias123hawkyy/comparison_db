@@ -5,7 +5,6 @@ import os
 import statistics
 import scipy.stats as stats
 
-# Connect to MySQL
 connection = mysql.connector.connect(
     host="localhost",
     user="root",
@@ -13,10 +12,8 @@ connection = mysql.connector.connect(
     database="social_media"
 ) 
 
-# Create a cursor object to interact with the database
 cursor = connection.cursor()
 
-# Perform the experiments
 num_experiments = 31
 response_times = []
 

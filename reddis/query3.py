@@ -11,12 +11,12 @@ USER_PREFIX = 'user:'
 POST_PREFIX = 'post:'
 MESSAGE_PREFIX = 'message:'
 QUERY_NAME = '1m_users_Query3'  
-# Perform the experiments
+
+
 num_experiments = 31
 response_times = []
 
 for i in range(num_experiments):
-    # Measure the response time
     start_time = datetime.now()
 
     # Find users with at least 3 posts
@@ -54,8 +54,7 @@ for i in range(num_experiments):
     response_time = (end_time - start_time).total_seconds() * 1000  # in milliseconds
     response_times.append(response_time)
 
-for i, time in enumerate(response_times):
-    print(f"Query {i+1} response time: {time} ms")
+
 
 mean_value = statistics.mean(response_times)
 

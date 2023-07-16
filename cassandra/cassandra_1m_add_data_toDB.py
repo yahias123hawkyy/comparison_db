@@ -3,11 +3,9 @@ import csv
 import uuid
 from datetime import datetime
 
-# Connect to Cassandra
 cluster = Cluster(['localhost'])
 session = cluster.connect('social_media')
 
-# Function to insert data into Cassandra table
 
 
 def insert_data(table_name, data):
@@ -19,19 +17,17 @@ def load_data_from_csv(file_name):
     data = []
     with open(file_name, 'r', encoding='utf-8') as file:
         reader = csv.reader(file)
-        next(reader)  # Skip header row
+        # next(reader)  
         for row in reader:
             data.append(row)
     return data
 
 
-# Load data from CSV files
 users_data_1m = load_data_from_csv('../datasets/m_1/users_1m.csv')
 posts_data_1m = load_data_from_csv('../datasets/m_1/posts_1m.csv')
 messages_data_1m = load_data_from_csv('../datasets/m_1/messages_1m.csv')
 friends_data_1m = load_data_from_csv('../datasets/m_1/friends_1m.csv')
 
-# Insert data into Cassandra tables
 
 # Users Table
 for row in users_data_1m:
@@ -80,5 +76,4 @@ for row in friends_data_1m:
     }
     insert_data('connections', friend)
 
-# Close the Cassandra connection
 cluster.shutdown()

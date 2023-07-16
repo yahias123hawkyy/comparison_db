@@ -25,7 +25,6 @@ response_times = []
 
 with driver.session() as session:
     for i in range(num_experiments):
-        # Measure the response time
         start_time = datetime.now()
         result1 = list(session.run(query))
         end_time = datetime.now()

@@ -13,7 +13,6 @@ QUERY_NAME = '1m_users_Query1'
 username = 'bjames'
 query = f"{USER_PREFIX}{username}"
 
-# Perform the experiments
 num_experiments = 31
 response_times = []
 
@@ -21,7 +20,7 @@ for i in range(num_experiments):
     start_time = datetime.now()
     result = r.hgetall(query)
     end_time = datetime.now()
-    response_time = (end_time - start_time).total_seconds() * 1000  # in milliseconds
+    response_time = (end_time - start_time).total_seconds() * 1000  
     response_times.append(response_time)
 
 mean_value = statistics.mean(response_times)
@@ -43,6 +42,5 @@ with open(csv_file, 'a', newline='') as file:
 confidence_interval = stats.t.interval(
     0.95, len(response_times)-1, loc=mean_value, scale=stats.sem(response_times))
 
-# Print the results
 print(f"Mean Value: {mean_value} ms")
 print(f"95% Confidence Interval: {confidence_interval}")

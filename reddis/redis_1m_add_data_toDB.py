@@ -3,7 +3,7 @@ import json
 from datetime import datetime
 import redis
 
-redis_client = redis.Redis(host='127.0.0.1', port=6379, db=0)  # Replace host and port with your Redis server details
+redis_client = redis.Redis(host='127.0.0.1', port=6379, db=0)  
 
 def insert_data(key, data):
     redis_client.set(key, json.dumps(data))

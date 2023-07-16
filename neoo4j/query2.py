@@ -11,7 +11,6 @@ user = 'neo4j'
 password = 'neo4jj' 
 driver = GraphDatabase.driver(uri, auth=(user, password))
 
-# Define your query
 query = '''
     MATCH (p:Post)
     WITH p.user_id AS user_id, COUNT(*) AS postCount
@@ -25,7 +24,6 @@ response_times = []
 
 with driver.session() as session:
     for i in range(num_experiments):
-        # Measure the response time
         start_time = datetime.now()
         result1 = list(session.run(query))
         print(result1)
@@ -55,9 +53,7 @@ with open(csv_file, 'a', newline='') as file:
 confidence_interval = stats.t.interval(
     0.95, len(response_times) - 1, loc=mean_value, scale=stats.sem(response_times))
 
-#
 print(f"Mean Value: {mean_value} ms")
 print(f"95% Confidence Interval: {confidence_interval}")
 
-# Close the Neo4j driver
 driver.close()

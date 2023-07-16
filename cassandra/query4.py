@@ -8,7 +8,6 @@ import scipy.stats as stats
 cluster = Cluster(['localhost'])
 session = cluster.connect('social_media')  
 
-# Perform the experiments
 num_experiments = 31
 response_times = []
 
@@ -40,7 +39,6 @@ for i in range(num_experiments):
 
 
 
-# Calculate the mean value
 mean_value = statistics.mean(response_times)
 
 csv_file = 'response_times_1m.csv'

@@ -25,13 +25,11 @@ def load_data_from_csv(file_name):
     return data
 
 
-# Load data from CSV files
 users_data_250k = load_data_from_csv('../datasets/k_250/users_250k.csv')
 posts_data_250k = load_data_from_csv('../datasets/k_250/posts_250k.csv')
 messages_data_250k = load_data_from_csv('../datasets/k_250/messages_250k.csv')
 friends_data_250k = load_data_from_csv('../datasets/k_250/friends_250k.csv')
 
-# Insert data into Cassandra tables
 
 # Users Table
 for row in users_data_250k:
@@ -80,5 +78,4 @@ for row in friends_data_250k:
     }
     insert_data('connections', friend)
 
-# Close the Cassandra connection
 cluster.shutdown()

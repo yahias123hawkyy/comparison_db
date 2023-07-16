@@ -1,7 +1,8 @@
 import csv
 import mysql.connector
+import uuid
+from datetime import datetime
 
-# Establish MySQL connection
 mysql_connection = mysql.connector.connect(
     host='localhost',
     user='root',
@@ -9,36 +10,87 @@ mysql_connection = mysql.connector.connect(
     database='social_media'
 )
 
-# Create MySQL cursor
+
 cursor = mysql_connection.cursor()
 
-# Set the SQL mode to allow the loading of a large number of rows
-cursor.execute("SET GLOBAL local_infile = 1")
 
-# Function to load data from CSV file using LOAD DATA INFILE
-def load_data_from_csv(table_name, file_path):
-    # Truncate the table (optional, if you want to start with an empty table)
-    cursor.execute(f"TRUNCATE TABLE {table_name}")
 
-    # Use LOAD DATA INFILE to perform bulk import
-    load_query = f"LOAD DATA INFILE '{file_path}' INTO TABLE {table_name} \
-                  FIELDS TERMINATED BY ',' ENCLOSED BY '\"' LINES TERMINATED BY '\n'"
+def insert_data(table_name, data):
+    columns = ', '.join(data.keys())
+    placeholders = ', '.join(['%s'] * len(data))
+    query = f"INSERT INTO {table_name} ({columns}) VALUES ({placeholders})"
+    cursor.execute(query, tuple(data.values()))
 
-    cursor.execute(load_query)
 
-# CSV file paths
-users_csv_file = '../datasets/k_500/users_500k.csv'
-# posts_csv_file = '../datasets/k_500/posts_500k.csv'
-# messages_csv_file = '../datasets/k_500/messages_500k.csv'
-# friends_csv_file = '../datasets/k_500/friends_500k.csv'
 
-# Load data from CSV files using bulk import
-load_data_from_csv('users', users_csv_file)
-# load_data_from_csv('posts', posts_csv_file)
-# load_data_from_csv('messages', messages_csv_file)
-# load_data_from_csv('connections', friends_csv_file)
+def load_data_from_csv(file_name):
+    data = []
+    with open(file_name, 'r', encoding='utf-8') as file:
+        reader = csv.reader(file)
+        next(reader)  # Skip header row
+        for row in reader:
+            data.append(row)
+        print("done with load data")
+    return data
 
-# Commit the changes and close the MySQL connection
+
+# Load data from CSV files
+users_data_500k = load_data_from_csv('../datasets/k_500/users_500k.csv')
+posts_data_500k = load_data_from_csv('../datasets/k_500/posts_500k.csv')
+messages_data_500k = load_data_from_csv('../datasets/k_500/messages_500k.csv')
+friends_data_500k = load_data_from_csv('../datasets/k_500/friends_500k.csv')
+
+# Insert data into MySQL tables
+
+# Users Table
+for row in users_data_500k:
+    user_id, username, full_name, email, password, profile_picture, bio = row
+    user = {
+        'user_id': uuid.UUID(user_id).bytes,
+        'username': username,
+        'full_name': full_name,
+        'email': email,
+        'password': password,
+        'profile_picture': profile_picture,
+        'bio': bio
+    }
+    insert_data('users', user)
+
+# Posts Table
+for row in posts_data_500k:
+    post_id, user_id, content, timestamp = row
+    post = {
+        'post_id': uuid.UUID(post_id).bytes,
+        'user_id': uuid.UUID(user_id).bytes,
+        'content': content,
+        'timestamp': datetime.strptime(timestamp.split('.')[0], '%Y-%m-%d %H:%M:%S')
+    }
+    insert_data('posts', post)
+
+# # Messages Table
+for row in messages_data_500k:
+    message_id, sender_id, receiver_id, content, timestamp = row
+    message = {
+        'message_id': uuid.UUID(message_id).bytes,
+        'sender_user_id': uuid.UUID(sender_id).bytes,
+        'receiver_user_id': uuid.UUID(receiver_id).bytes,
+        'content': content,
+        'timestamp': datetime.strptime(timestamp.split('.')[0], '%Y-%m-%d %H:%M:%S')
+    }
+    insert_data('messages', message)
+
+# # Connections Table
+for row in friends_data_500k:
+    user1_id, user2_id, timestamp = row
+    friend = {
+        'user_id_1': uuid.UUID(user1_id).bytes,
+        'user_id_2': uuid.UUID(user2_id).bytes,
+        'timestamp': datetime.strptime(timestamp.split('.')[0], '%Y-%m-%d %H:%M:%S')
+    }
+    insert_data('connections', friend)
+
 mysql_connection.commit()
 cursor.close()
 mysql_connection.close()
+
+

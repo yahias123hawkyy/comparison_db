@@ -5,7 +5,6 @@ import random
 from datetime import datetime
 
 
-#   generate data for each collection/ table
 
 
 def generate_users_data(num_records):

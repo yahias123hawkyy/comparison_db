@@ -81,7 +81,6 @@ for row in friends_data_500k:
     }
     friends_collection.append(friend)
 
-# Insert data into MongoDB collections
 insert_data('users', users_collection)
 insert_data('posts', posts_collection)
 insert_data('messages', messages_collection)

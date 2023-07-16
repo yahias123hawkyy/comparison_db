@@ -1,6 +1,4 @@
 import csv
-import uuid
-import random
 from datetime import datetime
 from pymongo import MongoClient
 
@@ -11,7 +9,6 @@ def insert_data(collection_name, data):
     collection = db[collection_name]
     collection.insert_many(data)
 
-# Function to load data from CSV file
 def load_data_from_csv(file_name):
     data = []
     with open(file_name, 'r', encoding='utf-8') as file:
@@ -20,13 +17,11 @@ def load_data_from_csv(file_name):
             data.append(row)
     return data
 
-# Load data from CSV files
 users_data_250k = load_data_from_csv('../datasets/k_250/users_250k.csv')
 posts_data_250k = load_data_from_csv('../datasets/k_250/posts_250k.csv')
 messages_data_250k = load_data_from_csv('../datasets/k_250/messages_250k.csv')
 friends_data_250k = load_data_from_csv('../datasets/k_250/friends_250k.csv')
 
-# Map attributes to collections
 
 # Users Collection
 users_collection = []
