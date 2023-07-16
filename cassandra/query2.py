@@ -16,7 +16,7 @@ response_times = []
 for i in range(num_experiments):
     start_time = datetime.now()
     result = session.execute(query)
-    user_ids_posted_at_least_3 = [row.user_id for row in result]
+    user_ids_posted_at_least_3 = [row.user_id for row in result if row.count >= 3]
     end_time = datetime.now()
     
     response_time = (end_time - start_time).total_seconds() * 1000  # in milliseconds
