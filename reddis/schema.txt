@@ -6,7 +6,7 @@ HSET user:{user_id} username {username} full_name {full_name} email {email} pass
 
 for the posts:
 
-HSET post:{post_id} user_id {user_id} content {content} timestamp {timestamp} post_count {post_count} message_count {message_count} connection_count {connection_count}
+HSET post:{post_id} user_id {user_id} content {content} timestamp {timestamp}
 
 for the messages:
 
